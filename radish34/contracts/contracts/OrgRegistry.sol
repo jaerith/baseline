@@ -40,7 +40,6 @@ contract OrgRegistry is Ownable, ERC165Compatible, Registrar, IOrgRegistry {
     // address[] public parties;
     Org[] orgs;
     mapping(address => address) managerMap;
-    mapping (address => bytes32) zkSpecialCircuitMap;
 
     event RegisterOrg(
         bytes32 _name,
@@ -243,22 +242,4 @@ contract OrgRegistry is Ownable, ERC165Compatible, Registrar, IOrgRegistry {
             zkpPublicKeys
         );
     }
-
-    /// @notice Function to retrieve the shortened URL of the special ZK "Circuit" associated with an organization
-    /// @param _address ethereum address of the registered organization
-    function getSpecialCircuit(address _address) public view returns (bytes32) {
-
-        return zkSpecialCircuitMap[_address];
-    }
-
-    /// @notice Function to optionally register a special ZK "Circuit" written in a DSL (like Zokrates)
-    /// @param _address ethereum address of the registered organization
-    /// @param _url online decentralized location (like IPFS) of the DSL code snippet, stored as a shortened URL
-    function setSpecialCircuit(address _address, bytes32 _url) public onlyOwner returns (bool) {
-
-        zkSpecialCircuitMap[_address] = _url;
-
-        return true;
-    }
-    
 }
